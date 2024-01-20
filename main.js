@@ -24,17 +24,24 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
-const validCred = arr => {
-  const reveredNums = arr.toReversed()
-  let val = 0
-  let sum = reveredNums.pop().map(num => {
-    val = num * 2
-    return val > 9? val - 9:val;
-  }).reduce((accumulate, current) => {
-    return accumulate+current
-  });
-  return sum%10 == 0?true:false;
+const validCred = numArr => {
+    let total = 0;
+  for (let i = numArr.length - 1; i >= 0; i--) {
+    let currValue = numArr[i]
+    if ((numArr.length - 1 - i) % 2 === 1) {
+      currValue *= 2;
+      if (currValue > 9) {
+        currValue -= 9;
+      }
+    }
+    total += currValue;
+  }
+
+  return total % 10 === 0;
 }
+
+console.log(validCred(valid1)); // Should print true
+console.log(validCred(invalid1));
 
 function findInvalidCards(cards, cb) {
   const invalidCards = []
